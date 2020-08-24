@@ -37,56 +37,50 @@
     <script defer>
         function drumPadPress(e) {
                 e.preventDefault();
-                let audio = null;
-                let drumpad = null;
-                if (document.querySelector(`audio[data-key = "${e.keyCode}"]`) && document.querySelector(`div.drumpad[data-key = "${e.keyCode}"]`)) {
-                    audio = document.querySelector(`audio[data-key = "${e.keyCode}"]`);
-                    drumpad = document.querySelector(`div.drumpad[data-key = "${e.keyCode}"]`);
-
-
-                    if (!audio || !drumpad) {
-                        audio = document.querySelector(`audio[data-key = "${this.getAttribute('data-key')}"]`);
-                        drumpad = document.querySelector(`div.drumpad[data-key = "${this.getAttribute('data-key')}"]`);
-                    }
-                    let volume = document.querySelector("input.volume").value;
-                    audio.volume = volume/100;
-                    audio.currentTime = 0;
-                    audio.play();
-                    // Set random animation
-                    let temp = drumpad.innerHTML;
-                    const showPress = document.querySelector("div.random")
-                    showPress.innerHTML = drumpad.getAttribute("title");
-                    let randomTop = Math.random() * 90;
-                    let random = Math.random();
-                    let randomLeft = 0;
-                    if (random < 0.5) {
-                        randomLeft = Math.random() * 25;
+                let audio, drumpad;
+                if (e.keyCode) {
+                    if (document.querySelector(`audio[data-key = "${e.keyCode}"]`) && document.querySelector(`div.drumpad[data-key = "${e.keyCode}"]`)) {
+                        audio = document.querySelector(`audio[data-key = "${e.keyCode}"]`);
+                        drumpad = document.querySelector(`div.drumpad[data-key = "${e.keyCode}"]`);
                     } else {
-                        randomLeft = Math.random() * 20 + 75;
+                        return;
                     }
-                    showPress.style.top = randomTop.toString() + "%";
-                    showPress.style.left = randomLeft.toString() + "%";
-
-                    // Set pressed animation
-                    drumpad.style.height = "100%";
-                    drumpad.style.backgroundColor = "pink";
-                    drumpad.style.boxShadow = "2px 0 5px lightblue, -2px 0 5px lightblue,0 -2px 5px lightblue";
-                    setTimeout(() => {
-                        drumpad.style.boxShadow = "none";
-                        drumpad.style.height = "0%";
-                        drumpad.style.backgroundColor = "white";
-                    }, 500);  
-                    }
-                    
+                } else {
+                    audio = document.querySelector(`audio[data-key = "${this.getAttribute('data-key')}"]`);
+                    drumpad = document.querySelector(`div.drumpad[data-key = "${this.getAttribute('data-key')}"]`);
+                }
+                let volume = document.querySelector("input.volume").value;
+                audio.volume = volume/100;
+                audio.currentTime = 0;
+                audio.play();
+                // Set random animation
+                let temp = drumpad.innerHTML;
+                const showPress = document.querySelector("div.random")
+                showPress.innerHTML = drumpad.getAttribute("title");
+                let randomTop = Math.random() * 90;
+                let random = Math.random();
+                let randomLeft = 0;
+                if (random < 0.5) {
+                    randomLeft = Math.random() * 25;
+                } else {
+                    randomLeft = Math.random() * 20 + 75;
+                }
+                showPress.style.top = randomTop.toString() + "%";
+                showPress.style.left = randomLeft.toString() + "%";
+                // Set pressed animation
+                drumpad.style.height = "100%";
+                drumpad.style.backgroundColor = "pink";
+                drumpad.style.boxShadow = "2px 0 5px lightblue, -2px 0 5px lightblue,0 -2px 5px lightblue";
+                setTimeout(() => {
+                    drumpad.style.boxShadow = "none";
+                    drumpad.style.height = "0%";
+                    drumpad.style.backgroundColor = "white";
+                }, 500);  
         };
-        document.onload = () => {
-            console.log("load");
-        }
         document.addEventListener('keydown', drumPadPress);
         const drumpad = document.querySelectorAll("div.drumpad");
         drumpad.forEach((individual) => {
-            individual.addEventListener('click', drumPadPress.bind(individual));
-            
+            individual.addEventListener('click', drumPadPress.bind(individual)); 
         });
     </script>
 </body>
