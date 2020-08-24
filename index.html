@@ -9,92 +9,82 @@
 <body>
     <h1>Drum kit</h1>
     <div class="drumpadContainer">
-        <div title="Hi-hat" class="drumpad">a</div>
-        <div title="Crash cymbal" class="drumpad">s</div>
-        <div title="Snare drum" class="drumpad">d</div>
-        <div title="Tom-tom" class="drumpad">f</div>
-        <div title="Bass drum" class="drumpad">space bar</div>
-        <div title="Tom-tom" class="drumpad">j</div>
-        <div title="Floor tom" class="drumpad">k</div>
-        <div title="Ride cymbal"  class="drumpad">l</div>
-        <div title="Splash cymbal" class="drumpad">;</div>        
+        <div title="Hi-hat" class="drumpad" data-key="65">a</div>
+        <div title="Crash cymbal" class="drumpad" data-key="83">s</div>
+        <div title="Snare drum" class="drumpad" data-key="68">d</div>
+        <div title="Tom-tom" class="drumpad" data-key="70">f</div>
+        <div title="Bass drum" class="drumpad" data-key="32">space bar</div>
+        <div title="Tom-tom" class="drumpad" data-key="74">j</div>
+        <div title="Floor tom" class="drumpad" data-key="75">k</div>
+        <div title="Ride cymbal"  class="drumpad"  data-key="76">l</div>
+        <div title="Splash cymbal" class="drumpad" data-key="186">;</div>        
     </div> 
     <audio src="https://www.fesliyanstudios.com/play-mp3/6701" data-key="65"></audio>
     <audio src="https://www.fesliyanstudios.com/play-mp3/6664" data-key="83"></audio>
     <audio src="https://www.fesliyanstudios.com/play-mp3/6769" data-key="68"></audio>
-    <audio src="https://www.fesliyanstudios.com/play-mp3/6692" data-key="70"></audio>
-    <audio src="https://www.fesliyanstudios.com/play-mp3/6658" data-key="32"></audio>
-    <audio src=""></audio>
+    <audio src="http://electrongate.com/dmxfiles/SFLTOM2.wav" data-key="70"></audio>
+    <audio src="http://dight310.byu.edu/media/audio/FreeLoops.com/2/2/Breakbeat%20Bass%20Drum-1032-Free-Loops.com.mp3" data-key="32"></audio>
+    <audio src="http://electrongate.com/dmxfiles/SFLTOM2.wav" data-key="74"></audio>
+    <audio src="http://electrongate.com/dmxfiles/SFLTOM2.wav" data-key="75"></audio>
     <audio src="https://www.fesliyanstudios.com/play-mp3/6733" data-key="76"></audio>
     <audio src="https://www.fesliyanstudios.com/play-mp3/6778" data-key="186"></audio>
-
     <div class="drumKitImageContainer">
-        <img src="https://ltp-us-cloudfront-source.s3.amazonaws.com/img/cat/69165/Standard-Female-Posture-Top-Down-View.jpg" alt="">
+        <img src="./Standard-Female-Posture-Top-Down-View-removebg-preview.png" alt="Drum kit">
     </div>   
-
-
+    <div class="volume"><input title="volume" class="volume" type="range" min="0" max="100"></div>
+    <div class="random"></div>
 
     <script>
-        const drumpad = document.querySelectorAll("div.drumpad");
-        function drumPadPress(key, drumpad, keyUpOrDown) {
-            if (keyUpOrDown != "up") {
-                const audio = document.querySelector(`audio[data-key = "${key}"]`);
-                if (key == "186") {
-                    // Set volume
-                    audio.volume = 1;
-                }
-                audio.currentTime = 0;
-                audio.play();
-                console.log(audio);
-                drumpad.style.height = "100%";
-                drumpad.style.backgroundColor = "pink";
-                drumpad.style.boxShadow = "2px 0 5px lightblue, -2px 0 5px lightblue,0 -2px 5px lightblue";
-                setTimeout(() => {
-                    drumpad.style.boxShadow = "none";
-                    drumpad.style.height = "0%";
-                    drumpad.style.backgroundColor = "white";
-                }, 500);
-            }
-            
+        function drumPadPress(e) {
+                e.preventDefault();
+                let audio = null;
+                let drumpad = null;
+                if (document.querySelector(`audio[data-key = "${e.keyCode}"]`) && document.querySelector(`div.drumpad[data-key = "${e.keyCode}"]`)) {
+                    audio = document.querySelector(`audio[data-key = "${e.keyCode}"]`);
+                    drumpad = document.querySelector(`div.drumpad[data-key = "${e.keyCode}"]`);
+
+
+                    if (!audio || !drumpad) {
+                        audio = document.querySelector(`audio[data-key = "${this.getAttribute('data-key')}"]`);
+                        drumpad = document.querySelector(`div.drumpad[data-key = "${this.getAttribute('data-key')}"]`);
+                    }
+                    let volume = document.querySelector("input.volume").value;
+                    audio.volume = volume/100;
+                    audio.currentTime = 0;
+                    audio.play();
+                    // Set random animation
+                    let temp = drumpad.innerHTML;
+                    const showPress = document.querySelector("div.random")
+                    showPress.innerHTML = drumpad.getAttribute("title");
+                    let randomTop = Math.random() * 90;
+                    let random = Math.random();
+                    let randomLeft = 0;
+                    if (random < 0.5) {
+                        randomLeft = Math.random() * 25;
+                    } else {
+                        randomLeft = Math.random() * 20 + 75;
+                    }
+                    showPress.style.top = randomTop.toString() + "%";
+                    showPress.style.left = randomLeft.toString() + "%";
+
+                    // Set pressed animation
+                    drumpad.style.height = "100%";
+                    drumpad.style.backgroundColor = "pink";
+                    drumpad.style.boxShadow = "2px 0 5px lightblue, -2px 0 5px lightblue,0 -2px 5px lightblue";
+                    setTimeout(() => {
+                        drumpad.style.boxShadow = "none";
+                        drumpad.style.height = "0%";
+                        drumpad.style.backgroundColor = "white";
+                    }, 500);  
+                    }
+                    
         };
-        document.addEventListener('keydown', e => {
-            const keyCode = e.keyCode;
-            console.log(keyCode);
-            switch (keyCode) {
-                case 65:
-                    drumPadPress(keyCode, drumpad[0], "down");
-                    break;
-                case 83:
-                    drumPadPress(keyCode, drumpad[1], "down");
-                    break;
-                case 68:
-                    drumPadPress(keyCode, drumpad[2], "down");
-                    break;
-                case 70:
-                    drumPadPress(keyCode, drumpad[3], "down");
-                    break;
-                case 32:
-                    drumPadPress(keyCode, drumpad[4], "down");
-                    break;
-                case 74:
-                    drumPadPress("70", drumpad[5], "down");
-                    break;
-                case 75:
-                    drumPadPress("32", drumpad[6], "down");
-                    break;
-                case 76:
-                    drumPadPress(keyCode, drumpad[7], "down");
-                    break;
-                case 186:
-                    drumPadPress(keyCode, drumpad[8], "down");
-                    break;
-            }
+        document.addEventListener('keydown', drumPadPress);
+        const drumpad = document.querySelectorAll("div.drumpad");
+        drumpad.forEach((individual) => {
+            individual.addEventListener('click', drumPadPress.bind(individual));
+            
         });
-        
-        
-        
-        
-        
     </script>
 </body>
 </html>

@@ -13,7 +13,7 @@ div.drumpad {
     border-radius: 5px;
 }
 div.drumpadContainer {
-    width: 500px;
+    width: 60%;
     height: 50px;
     margin: 0 auto;
     display: grid;
@@ -26,4 +26,18 @@ div.drumKitImageContainer {
 div.drumKitImageContainer img {
     width: 30%;
     margin: auto auto;
+}
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+div.random {
+    font-family: 'Dancing Script', cursive;
+    position: absolute;
+    font-size: xx-large;
+    color: rgb(218, 57, 57);
+}
+input.volume {
+    outline: none;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
 }
