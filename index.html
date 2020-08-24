@@ -22,10 +22,10 @@
     <audio src="https://www.fesliyanstudios.com/play-mp3/6701" data-key="65"></audio>
     <audio src="https://www.fesliyanstudios.com/play-mp3/6664" data-key="83"></audio>
     <audio src="https://www.fesliyanstudios.com/play-mp3/6769" data-key="68"></audio>
-    <audio src="http://electrongate.com/dmxfiles/SFLTOM2.wav" data-key="70"></audio>
-    <audio src="http://dight310.byu.edu/media/audio/FreeLoops.com/2/2/Breakbeat%20Bass%20Drum-1032-Free-Loops.com.mp3" data-key="32"></audio>
-    <audio src="http://electrongate.com/dmxfiles/SFLTOM2.wav" data-key="74"></audio>
-    <audio src="http://electrongate.com/dmxfiles/SFLTOM2.wav" data-key="75"></audio>
+    <audio src="https://www.fesliyanstudios.com/play-mp3/6761" data-key="70"></audio>
+    <audio src="https://www.fesliyanstudios.com/play-mp3/6661" data-key="32"></audio>
+    <audio src="https://www.fesliyanstudios.com/play-mp3/6726" data-key="74"></audio>
+    <audio src="https://www.fesliyanstudios.com/play-mp3/6693" data-key="75"></audio>
     <audio src="https://www.fesliyanstudios.com/play-mp3/6733" data-key="76"></audio>
     <audio src="https://www.fesliyanstudios.com/play-mp3/6778" data-key="186"></audio>
     <div class="drumKitImageContainer">
@@ -34,7 +34,7 @@
     <div class="volume"><input title="volume" class="volume" type="range" min="0" max="100"></div>
     <div class="random"></div>
 
-    <script>
+    <script defer>
         function drumPadPress(e) {
                 e.preventDefault();
                 let audio = null;
@@ -79,6 +79,9 @@
                     }
                     
         };
+        document.onload = () => {
+            console.log("load");
+        }
         document.addEventListener('keydown', drumPadPress);
         const drumpad = document.querySelectorAll("div.drumpad");
         drumpad.forEach((individual) => {
