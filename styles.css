@@ -1,0 +1,29 @@
+h1 {
+    text-align: center;
+}
+div.drumpad {
+    width: 90%;
+    height: 0;
+    border: 1px solid black;
+    margin: auto auto;
+    text-align: center;
+    cursor: pointer;
+    transition: height 0.4s ease-in-out ;
+    line-height: 50px;
+    border-radius: 5px;
+}
+div.drumpadContainer {
+    width: 500px;
+    height: 50px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto;    
+}
+div.drumKitImageContainer {
+    margin-top: 10px;
+    display: flex;
+}
+div.drumKitImageContainer img {
+    width: 30%;
+    margin: auto auto;
+}
